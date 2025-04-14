@@ -1,6 +1,6 @@
 import base64
 import os
-
+import re
 
 def encode_image(image_path):
     with open(image_path, "rb") as image_file:

@@ -14,15 +14,16 @@ from models.OpenAI import GPT
 
 if __name__ == "__main__":
     gpt4o = GPT(model='gpt-4o', api_key="Your OpenAI API Key")
-    
-    '''# SVG Generation part 
+    # SVG Generation part 
     system_prompt = 'You are an expert SVG graphics generator. You generate clean, valid SVG code according to user instructions.'
     
-    with open("labels.json", "r") as f:
+    with open("data/sketchy_svgs/labels.json", "r") as f:
         labels = json.load(f)
     #comments = pd.read_csv('claude_eval_gpt4o_sketchy.csv')
     
     output = {}
+    outdir = 'output-4o_with_reasoning'
+    os.makedirs(outdir, exist_ok=True)
     
     begin = time.time()
     for i in range(125):
@@ -46,15 +47,21 @@ if __name__ == "__main__":
         
         answer = gpt4o.basic_request(system_prompt, txt_prompt)
         ans = answer['choices'][0]['message']['content']
-        output[label] = ans
+        
+        svg_output = svg_clean(ans)
+        output[label] = svg_output
     end = time.time()
     # Calculate time for generation
     print(end-begin)
     
-    with open('output-4_5_with_reasoning.json', 'w') as f:
-        json.dump(output, f, indent=4)
-    '''
+    #with open('output-4o_with_reasoning.json', 'w') as f:
+    #    json.dump(output, f, indent=4)
     
+    for key in output.keys():
+        with open(outdir+'/'+key+'.svg', 'w') as fout:
+            fout.write(output[key])
+
+    '''
     # SVG Edit part
     system_prompt = 'You are an assistant for SVG edit task.'
     repo = 'SVGEditBench'
@@ -84,4 +91,4 @@ if __name__ == "__main__":
                 svg_output = svg_clean(ans)
                 with open(output_dir+'/'+query.replace('.txt','.svg'),'w') as fout:
                     fout.write(svg_output)
-    
+    '''
