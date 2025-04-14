@@ -65,7 +65,7 @@ def score_comment_summary(paths, claude):
     
     
 if __name__ == "__main__":
-    sonnet = Claude(model='claude-3-7-sonnet-20250219', api_key="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")
+    sonnet = Claude(model='claude-3-7-sonnet-20250219', api_key="Your API Key")
     paths = ['claude_eval_gpt4o_reasoning_try%d'%(j) for j in range(3)]
     average_score = [score_calculate(paths[j]) for j in range(3)]
     print(sum(average_score)/3)
