@@ -1,0 +1,147 @@
+---
+dataset_info:
+  features:
+  - name: label
+    dtype:
+      class_label:
+        names:
+          '0': airplane
+          '1': alarm_clock
+          '2': ant
+          '3': ape
+          '4': apple
+          '5': armor
+          '6': axe
+          '7': banana
+          '8': bat
+          '9': bear
+          '10': bee
+          '11': beetle
+          '12': bell
+          '13': bench
+          '14': bicycle
+          '15': blimp
+          '16': bread
+          '17': butterfly
+          '18': cabin
+          '19': camel
+          '20': candle
+          '21': cannon
+          '22': car_(sedan)
+          '23': castle
+          '24': cat
+          '25': chair
+          '26': chicken
+          '27': church
+          '28': couch
+          '29': cow
+          '30': crab
+          '31': crocodilian
+          '32': cup
+          '33': deer
+          '34': dog
+          '35': dolphin
+          '36': door
+          '37': duck
+          '38': elephant
+          '39': eyeglasses
+          '40': fan
+          '41': fish
+          '42': flower
+          '43': frog
+          '44': geyser
+          '45': giraffe
+          '46': guitar
+          '47': hamburger
+          '48': hammer
+          '49': harp
+          '50': hat
+          '51': hedgehog
+          '52': helicopter
+          '53': hermit_crab
+          '54': horse
+          '55': hot-air_balloon
+          '56': hotdog
+          '57': hourglass
+          '58': jack-o-lantern
+          '59': jellyfish
+          '60': kangaroo
+          '61': knife
+          '62': lion
+          '63': lizard
+          '64': lobster
+          '65': motorcycle
+          '66': mouse
+          '67': mushroom
+          '68': owl
+          '69': parrot
+          '70': pear
+          '71': penguin
+          '72': piano
+          '73': pickup_truck
+          '74': pig
+          '75': pineapple
+          '76': pistol
+          '77': pizza
+          '78': pretzel
+          '79': rabbit
+          '80': raccoon
+          '81': racket
+          '82': ray
+          '83': rhinoceros
+          '84': rifle
+          '85': rocket
+          '86': sailboat
+          '87': saw
+          '88': saxophone
+          '89': scissors
+          '90': scorpion
+          '91': sea_turtle
+          '92': seagull
+          '93': seal
+          '94': shark
+          '95': sheep
+          '96': shoe
+          '97': skyscraper
+          '98': snail
+          '99': snake
+          '100': songbird
+          '101': spider
+          '102': spoon
+          '103': squirrel
+          '104': starfish
+          '105': strawberry
+          '106': swan
+          '107': sword
+          '108': table
+          '109': tank
+          '110': teapot
+          '111': teddy_bear
+          '112': tiger
+          '113': tree
+          '114': trumpet
+          '115': turtle
+          '116': umbrella
+          '117': violin
+          '118': volcano
+          '119': wading_bird
+          '120': wheelchair
+          '121': windmill
+          '122': window
+          '123': wine_bottle
+          '124': zebra
+  - name: svg
+    dtype: string
+  splits:
+  - name: train
+    num_bytes: 3350400132.1348753
+    num_examples: 59966
+  - name: test
+    num_bytes: 837627968.8651245
+    num_examples: 14992
+  download_size: 2677218539
+  dataset_size: 4188028101.0
+---
+# Dataset Card for "sketchy-svgs"
+
+[More Information needed](https://github.com/huggingface/datasets/blob/main/CONTRIBUTING.md#how-to-contribute-to-the-dataset-cards)
