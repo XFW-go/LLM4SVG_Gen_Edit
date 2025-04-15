@@ -10,10 +10,12 @@ from abc import ABC
 import time
 from utils import encode_image, svg_clean
 from models.OpenAI import GPT
+from models.Deepseek import Deepseek
 
 
 if __name__ == "__main__":
-    gpt4o = GPT(model='gpt-4o', api_key="Your OpenAI API Key")
+    # gpt4o = GPT(model='gpt-4o', api_key="Your OpenAI API Key")
+    gpt4o = Deepseek(model="deepseek-chat", api_key="XXX")
     # SVG Generation part 
     system_prompt = 'You are an expert SVG graphics generator. You generate clean, valid SVG code according to user instructions.'
     
@@ -25,43 +27,44 @@ if __name__ == "__main__":
     outdir = 'output-4o_with_reasoning'
     os.makedirs(outdir, exist_ok=True)
     
-    begin = time.time()
-    for i in range(125):
-        label = labels[str(i)]
-        print(label)
+    # begin = time.time()
+    # for i in range(125):
+    #     label = labels[str(i)]
+    #     print(label)
         
-        # Original prompt
-        #txt_prompt = 'Create a nice-looking SVG image which can be described by the following label: {%s}'%(label)
+    #     # Original prompt
+    #     #txt_prompt = 'Create a nice-looking SVG image which can be described by the following label: {%s}'%(label)
         
-        # If comments are available for reference
-        #comment = comments[comments['Label']==label]['Comment']
-        #txt_prompt = 'Create a nice-looking SVG image of the following object: {%s}.\n Some comments to your previously generated SVG image:{%s}.\n Now please create the SVG image.'%(label, comment)
+    #     # If comments are available for reference
+    #     #comment = comments[comments['Label']==label]['Comment']
+    #     #txt_prompt = 'Create a nice-looking SVG image of the following object: {%s}.\n Some comments to your previously generated SVG image:{%s}.\n Now please create the SVG image.'%(label, comment)
         
-        # If score is above the threshold, no need to re-generate 
-        #score = float(comments[comments['Label']==label]['Score'])
-        #if score >= 7:
-        #    continue
+    #     # If score is above the threshold, no need to re-generate 
+    #     #score = float(comments[comments['Label']==label]['Score'])
+    #     #if score >= 7:
+    #     #    continue
         
-        # Reasoning prompt. (First reasoning about the object, then generate)
-        txt_prompt = 'Think step by step of the feature about the object {%s}.\n Then create a nice-looking SVG image which can be described by the following label: {%s}.'%(label, label)
+    #     # Reasoning prompt. (First reasoning about the object, then generate)
+    #     txt_prompt = 'Think step by step of the feature about the object {%s}.\n Then create a nice-looking SVG image which can be described by the following label: {%s}.'%(label, label)
         
-        answer = gpt4o.basic_request(system_prompt, txt_prompt)
-        ans = answer['choices'][0]['message']['content']
+    #     answer = gpt4o.basic_request(system_prompt, txt_prompt)
+    #     ans = answer['choices'][0]['message']['content']
+    #     # ans = answer.choices[0].message.content
         
-        svg_output = svg_clean(ans)
-        output[label] = svg_output
-    end = time.time()
-    # Calculate time for generation
-    print(end-begin)
+    #     svg_output = svg_clean(ans)
+    #     output[label] = svg_output
+    # end = time.time()
+    # # Calculate time for generation
+    # print(end-begin)
     
-    #with open('output-4o_with_reasoning.json', 'w') as f:
-    #    json.dump(output, f, indent=4)
+    # #with open('output-4o_with_reasoning.json', 'w') as f:
+    # #    json.dump(output, f, indent=4)
     
-    for key in output.keys():
-        with open(outdir+'/'+key+'.svg', 'w') as fout:
-            fout.write(output[key])
+    # for key in output.keys():
+    #     with open(outdir+'/'+key+'.svg', 'w') as fout:
+    #         fout.write(output[key])
 
-    '''
+
     # SVG Edit part
     system_prompt = 'You are an assistant for SVG edit task.'
     repo = 'SVGEditBench'
@@ -73,7 +76,7 @@ if __name__ == "__main__":
         "5_Transparency",
         "6_CropToHalf",
     ]
-    output_prefix = 'gpt4o_svgedit'
+    output_prefix = 'ds_svgedit'
     os.makedirs(output_prefix, exist_ok=True)
     
     for task in tasks:
@@ -83,12 +86,19 @@ if __name__ == "__main__":
         output_dir = os.path.join(output_prefix, task)
         os.makedirs(output_dir, exist_ok=True)
         
+        queries = set(queries) - set(os.listdir(os.path.join(output_prefix, task)))
+        # with open(os.path.join(output_prefix, task))
+        
         for query in queries:
-            with open(os.path.join(query_file, query), 'r') as f:
-                txt_prompt = f.read()
+            try:
+                with open(os.path.join(query_file, query), 'r') as f:
+                    txt_prompt = f.read()
                 answer = gpt4o.basic_request(system_prompt, txt_prompt)
-                ans = answer['choices'][0]['message']['content']
+                # ans = answer['choices'][0]['message']['content']
+                ans = answer.choices[0].message.content
                 svg_output = svg_clean(ans)
                 with open(output_dir+'/'+query.replace('.txt','.svg'),'w') as fout:
                     fout.write(svg_output)
-    '''
+            except Exception as e:
+                print(str(e))
+                print()

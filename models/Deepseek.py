@@ -16,7 +16,7 @@ class Deepseek(ABC):
     def basic_request(self, system_prompt, prompt, **kwargs):
         response = self.client.chat.completions.create(
             **kwargs,
-            model="deepseek-chat",
+            model=self.model,
             messages=[
                 {
                     "role": "system", 
